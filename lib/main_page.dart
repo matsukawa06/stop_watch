@@ -44,51 +44,90 @@ class _MainPageBody extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            SpaceBox.height(32),
+            //=============================
+            // 秒数表示
+            //=============================
+            SpaceBox.height(50),
+
             Consumer<StopWatchModel>(
-              builder: (context, model, _) => Text(
-                model.stopWatchTimeDisplay,
-                //style: Theme.of(context).textTheme.headline2,
-                style: TextStyle(
-                  fontSize: 70,
-                  color: Colors.white,
+              builder: (context, model, _) => Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      // model.stopWatchTimeDisplay,
+                      model.timeDisplayMinutesSeconds,
+                      //style: Theme.of(context).textTheme.headline2,
+                      style: _TextStyles.body,
+                    ),
+                  ),
+                  Text(
+                    ".",
+                    style: _TextStyles.body,
+                  ),
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      // model.stopWatchTimeDisplay,
+                      model.timeDisplayMilliseconds,
+                      //style: Theme.of(context).textTheme.headline2,
+                      style: _TextStyles.body,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            //=============================
+            // 開始・終了ボタン
+            //=============================
+            SpaceBox.height(50),
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: FloatingActionButton(
+                backgroundColor:
+                    stopWatchModel.isStartPressed ? Colors.green : Colors.red,
+                onPressed: stopWatchModel.isStartPressed
+                    ? stopWatchModel.startStopWatch
+                    : stopWatchModel.stopStopWatch,
+                child: Text(
+                  stopWatchModel.isStartPressed ? "開始" : "停止",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40,
+                  ),
                 ),
               ),
             ),
+            //=============================
+            // リセットボタン
+            //=============================
             SpaceBox.height(32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: FloatingActionButton(
-                    backgroundColor: stopWatchModel.isStartPressed ? Colors.green : Colors.red,
-                    onPressed: stopWatchModel.isStartPressed
-                        ? stopWatchModel.startStopWatch
-                        : stopWatchModel.stopStopWatch,
-                    child: Text(
-                      stopWatchModel.isStartPressed ? "開始" : "停止",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                      ),
-                    ),
+            SizedBox(
+              height: 50,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey,
                   ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                    onPressed: stopWatchModel.isResetPressed
-                        ? stopWatchModel.resetStopWatch //null
-                        : stopWatchModel.resetStopWatch,
-                    child: Text("リセット"))
-              ],
-            ),
+                  onPressed: stopWatchModel.isResetPressed
+                      ? null
+                      : stopWatchModel.resetStopWatch,
+                  child: Text(
+                    "リセット",
+                    style: TextStyle(fontSize: 20),
+                  )),
+            )
           ],
         ),
       ),
     );
   }
+}
+class _TextStyles {
+  static const body = TextStyle(
+    fontSize: 70,
+    color: Colors.white
+  );
 }
