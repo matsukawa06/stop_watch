@@ -54,11 +54,23 @@ class _MainPageBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 200,
+                    width: 80,
                     child: Text(
-                      // model.stopWatchTimeDisplay,
-                      model.timeDisplayMinutesSeconds,
-                      //style: Theme.of(context).textTheme.headline2,
+                      model.timeDisplayMinutes,
+                      style: _TextStyles.body,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 5, right: 5),
+                    child: Text(
+                      ":",
+                      style: _TextStyles.body,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 80,
+                    child: Text(
+                      model.timeDisplaySeconds,
                       style: _TextStyles.body,
                     ),
                   ),
@@ -67,11 +79,9 @@ class _MainPageBody extends StatelessWidget {
                     style: _TextStyles.body,
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 80,
                     child: Text(
-                      // model.stopWatchTimeDisplay,
                       model.timeDisplayMilliseconds,
-                      //style: Theme.of(context).textTheme.headline2,
                       style: _TextStyles.body,
                     ),
                   ),
@@ -125,9 +135,7 @@ class _MainPageBody extends StatelessWidget {
     );
   }
 }
+
 class _TextStyles {
-  static const body = TextStyle(
-    fontSize: 70,
-    color: Colors.white
-  );
+  static const body = TextStyle(fontSize: 70, color: Colors.white);
 }

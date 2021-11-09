@@ -8,7 +8,8 @@ class StopWatchModel extends ChangeNotifier {
   bool isStartPressed = true;
 
   //String stopWatchTimeDisplay = '00:00.00';
-  String timeDisplayMinutesSeconds = '00:00';
+  String timeDisplayMinutes = '00';
+  String timeDisplaySeconds = '00';
   String timeDisplayMilliseconds = '00';
 
   // Stopwatch型を指定
@@ -30,9 +31,10 @@ class StopWatchModel extends ChangeNotifier {
     //         (swatch.elapsed.inSeconds % 60).toString().padLeft(2, "0") +
     //         '.' +
     //         (milliSeconds).toString().padLeft(2, "0");
-    this.timeDisplayMinutesSeconds =
-        (swatch.elapsed.inMinutes % 60).toString().padLeft(2, "0") +
-            ':' +(swatch.elapsed.inSeconds % 60).toString().padLeft(2, "0");
+    this.timeDisplayMinutes =
+        (swatch.elapsed.inMinutes % 60).toString().padLeft(2, "0");
+    this.timeDisplaySeconds =
+        (swatch.elapsed.inSeconds % 60).toString().padLeft(2, "0");
     this.timeDisplayMilliseconds = (milliSeconds).toString().padLeft(2, "0");
     notifyListeners();
   }
@@ -64,7 +66,8 @@ class StopWatchModel extends ChangeNotifier {
     swatch.stop();
     swatch.reset();
     // stopWatchTimeDisplay = '00:00.00';
-    timeDisplayMinutesSeconds = '00:00';
+    timeDisplayMinutes = '00';
+    timeDisplaySeconds = '00';
     timeDisplayMilliseconds = '00';
     notifyListeners();
   }
