@@ -1,6 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stop_watch/CommonUtil.dart';
 import 'package:stop_watch/stop_watch_model.dart';
@@ -32,58 +33,78 @@ class _MainPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     final stopWatchModel = Provider.of<StopWatchModel>(context);
+    var _switchValue = false;
+
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.black,
-        title: Text('シンプルストップウォッチ'),
+        // backgroundColor: Colors.black,
+        title: Text('目隠しストップウォッチ'),
         // ステータスバーをダーク用の表示に変更
-        brightness: Brightness.dark,
+        // brightness: Brightness.dark,
       ),
       // 再描画したい箇所だけConsumerで囲む
       body: Center(
         child: Column(
           children: [
+            SpaceBox.height(20),
+            //=============================
+            // タイム表示／非表示トグル
+            //=============================
+            SwitchListTile(
+              value: _switchValue,
+              title: Text(
+                'タイムを隠す',
+                style: TextStyle(
+                  fontSize: 25,
+                  // color: Colors.white,
+                  // fontWeight: FontWeight.bold,
+                  // fontFamily: 'Cursive',
+                ),
+              ),
+              onChanged: (bool value) {
+                // setState(() {
+                //   _switchValue = value;
+                // });
+              },
+            ),
             //=============================
             // 秒数表示
             //=============================
-            SpaceBox.height(50.h),
-
-            Consumer<StopWatchModel>(
-              builder: (context, model, _) => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            SpaceBox.height(20),
+            Container(
+              alignment: Alignment.center,
+              child: Stack(
                 children: [
-                  SizedBox(
-                    width: 80.w,
-                    child: Text(
-                      model.timeDisplayMinutes,
-                      style: TextStyle(fontSize: 70.sp, color: Colors.white),
+                  Consumer<StopWatchModel>(
+                    builder: (context, model, _) => FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        model.stopWatchTimeDisplay,
+                        style: TextStyle(
+                            fontSize: 70,
+                            // color: Colors.white,
+                            fontFeatures: [
+                              FontFeature.tabularFigures(),
+                            ]),
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 5, right: 5),
-                    child: Text(
-                      ":",
-                      style: TextStyle(fontSize: 70.sp, color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 80.w,
-                    child: Text(
-                      model.timeDisplaySeconds,
-                      style: TextStyle(fontSize: 70.sp, color: Colors.white),
-                    ),
-                  ),
-                  Text(
-                    ".",
-                    style: TextStyle(fontSize: 70.sp, color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 80.w,
-                    child: Text(
-                      model.timeDisplayMilliseconds,
-                      style: TextStyle(fontSize: 70.sp, color: Colors.white),
+                  Visibility(
+                    visible: _switchValue,
+                    child: Container(
+                      alignment: Alignment.center,
+                      // width: double.infinity,
+                      color: Colors.white,
+                      child: Text(
+                        '非表示中',
+                        style: TextStyle(
+                          fontSize: 55,
+                          color: Colors.red,
+                          // backgroundColor: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -93,10 +114,10 @@ class _MainPageBody extends StatelessWidget {
             //=============================
             // 開始・終了ボタン
             //=============================
-            SpaceBox.height(50.h),
+            SpaceBox.height(50),
             SizedBox(
-              width: 150.w,
-              height: 150.h,
+              width: 150,
+              height: 150,
               child: FloatingActionButton(
                 backgroundColor:
                     stopWatchModel.isStartPressed ? Colors.green : Colors.red,
@@ -107,7 +128,7 @@ class _MainPageBody extends StatelessWidget {
                   stopWatchModel.isStartPressed ? "開始" : "停止",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 40.sp,
+                    fontSize: 40,
                   ),
                 ),
               ),
@@ -115,9 +136,9 @@ class _MainPageBody extends StatelessWidget {
             //=============================
             // リセットボタン
             //=============================
-            SpaceBox.height(32.h),
+            SpaceBox.height(32),
             SizedBox(
-              height: 50.h,
+              height: 50,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.grey,
@@ -127,7 +148,7 @@ class _MainPageBody extends StatelessWidget {
                       : stopWatchModel.resetStopWatch,
                   child: Text(
                     "リセット",
-                    style: TextStyle(fontSize: 20.sp),
+                    style: TextStyle(fontSize: 20),
                   )),
             )
           ],
@@ -136,10 +157,3 @@ class _MainPageBody extends StatelessWidget {
     );
   }
 }
-
-// class _TextStyles {
-//   static const body = TextStyle(
-//     //fontSize: 70.sp,
-//     color: Colors.white,
-//   );
-// }
