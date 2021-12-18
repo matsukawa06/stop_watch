@@ -16,6 +16,15 @@ class StopWatchModel extends ChangeNotifier {
   var swatch = Stopwatch();
   final dul = const Duration(milliseconds: 10);
 
+  var _switchValue = false;
+  get switchValue => _switchValue;
+
+  // タイム表示切り替え
+  void changeIsSwitchValue(bool value) {
+    _switchValue = value;
+    notifyListeners();
+  }
+
   startTimer() {
     Timer(dul, keepRunning);
   }
@@ -55,6 +64,7 @@ class StopWatchModel extends ChangeNotifier {
     this.isStartPressed = true;
 
     swatch.stop();
+    changeIsSwitchValue(false);
     notifyListeners();
   }
 

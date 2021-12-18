@@ -33,7 +33,7 @@ class _MainPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     final stopWatchModel = Provider.of<StopWatchModel>(context);
-    var _switchValue = false;
+    // var _switchValue = false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -53,7 +53,7 @@ class _MainPageBody extends StatelessWidget {
             // タイム表示／非表示トグル
             //=============================
             SwitchListTile(
-              value: _switchValue,
+              value: stopWatchModel.switchValue,
               title: Text(
                 'タイムを隠す',
                 style: TextStyle(
@@ -64,6 +64,7 @@ class _MainPageBody extends StatelessWidget {
                 ),
               ),
               onChanged: (bool value) {
+                stopWatchModel.changeIsSwitchValue(value);
                 // setState(() {
                 //   _switchValue = value;
                 // });
@@ -92,7 +93,7 @@ class _MainPageBody extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: _switchValue,
+                    visible: stopWatchModel.switchValue,
                     child: Container(
                       alignment: Alignment.center,
                       // width: double.infinity,
