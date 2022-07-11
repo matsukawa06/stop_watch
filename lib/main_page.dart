@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stop_watch/CommonUtil.dart';
@@ -16,7 +16,6 @@ class MainPage extends StatelessWidget {
 class _ProviderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<StopWatchModel>(
@@ -31,7 +30,6 @@ class _ProviderWidget extends StatelessWidget {
 class _MainPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     final stopWatchModel = Provider.of<StopWatchModel>(context);
     // var _switchValue = false;
 
@@ -39,10 +37,21 @@ class _MainPageBody extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        // backgroundColor: Colors.black,
         title: Text('目隠しストップウォッチ'),
         // ステータスバーをダーク用の表示に変更
         // brightness: Brightness.dark,
+        // 右側ボタン
+        actions: [
+          IconButton(
+            onPressed: () {
+              // "puch"で
+            },
+            icon: Icon(
+              Icons.settings,
+              size: 30,
+            ),
+          )
+        ],
       ),
       // 再描画したい箇所だけConsumerで囲む
       body: Center(
@@ -83,8 +92,7 @@ class _MainPageBody extends StatelessWidget {
                       fit: BoxFit.fitWidth,
                       child: Text(
                         model.stopWatchTimeDisplay,
-                        style: TextStyle(
-                            fontSize: 70,
+                        style: TextStyle(fontSize: 70,
                             // color: Colors.white,
                             fontFeatures: [
                               FontFeature.tabularFigures(),
